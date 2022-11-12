@@ -5,8 +5,9 @@
 
 
 /* Node modules */
-const Discord = require('discord.js');
-const { MessageAttachment, Message } = require('discord.js');                                           // Discord JS
+const { channel } = require('diagnostics_channel');
+const Discord = require('discord.js');                                                                  // Discord JS
+// const { MessageAttachment, Message } = require('discord.js');                       
 
 /* External JSONs */
 const config = require('./jsons/config.json'); 															// Generic config declaration in event other things are added
@@ -22,9 +23,18 @@ const money = require('./money.js');																	// Money stuff
 
 // Bet is already checked against user balance
 // Additional check(s) may be needed for further bets
-function playBlackjack(msg, args, client, bet)
+async function playBlackjack(msg, args, client, bet)
 {
-    //
+    const thread = await msg.channel.threads.create
+    ({
+        name: 'BLACKJACK (' + msg.author.tag + ')',
+        autoArchiveDuration: 60,
+        reason: 'A new thread for your game'
+    });
+
+    await thread.join();
+    await thread.members.add(msg.author.id);
+    // await thread.send("Test message!");
 }
 
 
