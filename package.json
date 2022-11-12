@@ -1,0 +1,24 @@
+{
+	"name": "discord-bot-2-package",
+	"version": "1.0.0",
+	"dependencies": {
+		"@discordjs/opus": "^0.8.0",
+		"@discordjs/voice": "^0.8.0",
+		"canvas": "^2.9.1",
+		"chartjs-node-canvas": "^4.1.6",
+		"discord.js": "^13.6.0",
+		"ffmpeg-static": "^4.4.1",
+		"file": "^0.2.2",
+		"jimp": "^0.16.2",
+		"libsodium-wrappers": "^0.7.9",
+		"mysql": "^2.18.1",
+		"ndoe": "^0.0.0",
+		"node": "^17.7.1",
+		"node.js": "^0.0.1-security",
+		"pg": "^8.7.3",
+		"sodium": "^3.0.2",
+		"ytdl": "^1.4.1",
+		"ytdl-core": "^4.11.2",
+		"ytdl-getinfo": "^1.1.0"
+	}
+}
