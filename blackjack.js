@@ -7,7 +7,7 @@
 /* Node modules */
 const { channel } = require('diagnostics_channel');
 const Discord = require('discord.js');                                                                  // Discord JS
-// const { MessageAttachment, Message } = require('discord.js');                       
+const Jimp = require('jimp');                                                                           // File manipulation                
 
 /* External JSONs */
 const config = require('./jsons/config.json'); 															// Generic config declaration in event other things are added
@@ -36,6 +36,15 @@ async function playBlackjack(msg, args, client, bet)
     await thread.members.add(msg.author.id);
     // await thread.send("Test message!");
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*CARD FUNCTIONS*/
+
+
+// use Node Jimp to add value to card(s) and resize
+//
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
