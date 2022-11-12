@@ -1,15 +1,15 @@
 // DISCORD BOT 2
 // CASINO FUNCTIONS
 // Created: 		5/17/22
-// Last modified:	11/7/22
+// Last modified:	11/12/22
 
 
 /* Node modules */
 const Discord = require('discord.js');
-const PG = require('pg');																				// PostgreSQL
-const path = require("path");                                                                           // Path variable
-const fs = require('fs');                                                                               // File reading/writing (mostly writing)
-const { MessageAttachment, Message } = require('discord.js');                                           // Discord JS
+// const PG = require('pg');																			// PostgreSQL
+// const path = require("path");																		// Path variable
+// const fs = require('fs');																			// File reading/writing (mostly writing)
+// const { MessageAttachment, Message } = require('discord.js');										// Discord JS
 const Jimp = require('jimp');
 
 /* External JSONs */
@@ -17,8 +17,9 @@ const config = require('./jsons/config.json'); 															// Generic config 
 
 /* External JavaScript files */
 const money = require('./money.js');																	// Money stuff
-const { Canvas, Image, jpegVersion } = require('canvas');
-const { fstat } = require('fs');
+const blackj = require('./blackjack');                                                                  // JavaScript file for blackjack
+// const { Canvas, Image, jpegVersion } = require('canvas');
+// const { fstat } = require('fs');
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,6 +99,9 @@ function handleCasino(msg, args, client, game)
 						return;
 					}
 					rangeGame(msg, args, gambleAmt, args[1], client);
+					break;
+				case "blackjack":
+					blackj.playBlackjack(msg, args, client, gambleAmt);									// Offloads work to blackjack.js
 					break;
 			}
 		}

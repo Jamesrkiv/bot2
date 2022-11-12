@@ -1,7 +1,7 @@
 // DISCORD BOT 2
 //
 // Created: 		3/6/22
-// Last modified:	11/6/22
+// Last modified:	11/12/22
 
 
 /* Node modules */
@@ -150,6 +150,11 @@ bot.on('messageCreate', msg=>                                                   
             case "slots":
             case "range":
                 casino.handleCasino(msg, args, client, command);                                        // Offloads work to casino.js
+                break;
+
+            // BLACKJACK COMMAND
+            case "blackjack":
+                casino.handleCasino(msg, args, client, "blackjack");                                    // Offloads work to casino.js
                 break;
 
             // PURGE COMMAND
