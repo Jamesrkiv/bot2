@@ -132,7 +132,7 @@ function checkBalance(msg, args, client)
 				var embed = new Discord.MessageEmbed()
 					.setColor('#d4d977')
 					.setTitle(msg.author.tag)
-					.addField('Account points:', '' + resVal)
+					.addFields({ name: 'Account points:', value: '' + resVal})
 					.setThumbnail(msg.author.displayAvatarURL());
 				msg.channel.send({ embeds: [embed] });
 				return;

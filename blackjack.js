@@ -25,6 +25,8 @@ const money = require('./money.js');																	// Money stuff
 // Additional check(s) may be needed for further bets
 async function playBlackjack(msg, args, client, bet)
 {
+    return; // Temp
+
     const thread = await msg.channel.threads.create
     ({
         name: 'BLACKJACK (' + msg.author.tag + ')',
@@ -35,6 +37,23 @@ async function playBlackjack(msg, args, client, bet)
     await thread.join();
     await thread.members.add(msg.author.id);
     // await thread.send("Test message!");
+
+    // Probably a better way to do this, however, fuck you
+    var spade   = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a']; 
+    var club    = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'];
+    var diamond = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'];
+    var heart   = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'];
+
+    const filter = m => m.author.tag === msg.author.tag;
+    await thread.awaitMessages({ filter, max: 3, time: 10_000, errors: ['time'] })
+    .then (collected => 
+        console.log(collected)
+    )
+    .catch (collected => 
+        console.log(collected)
+    );
+
+    await thread.delete();
 }
 
 
