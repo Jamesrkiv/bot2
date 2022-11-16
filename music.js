@@ -106,6 +106,9 @@ async function play(msg, serverQueue, args)
         
     var guild = msg.guild;                                                                          // Discord server variable   
 
+    args[1] = args[1].replace('<', '');
+    args[1] = args[1].replace('>', '');
+
     checkurl = validateYouTubeUrl(args[1]);
     if(!checkurl) return msg.reply("Not a valid YouTube URL");
 
