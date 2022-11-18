@@ -1,7 +1,7 @@
 // DISCORD BOT 2
 // MUSIC FUNCTIONS
 // Created: 		3/7/22
-// Last modified:	10/22/22
+// Last modified:	11/15/22
 
 
 const Discord = require('discord.js');

@@ -1,7 +1,7 @@
 // DISCORD BOT 2
 // BLACKJACK FUNCTIONS
 // Created: 		11/12/22
-// Last modified:	11/12/22
+// Last modified:	11/18/22
 
 
 /* Node modules */
@@ -44,16 +44,30 @@ async function playBlackjack(msg, args, client, bet)
     var diamond = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'];
     var heart   = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'];
 
-    const filter = m => m.author.tag === msg.author.tag;
+    const filter = m => m.author.tag === msg.author.tag;                                                // Filters messages in thread to original author
+
+    // Needs to be able to get messages after x amount of time/messages
+    // then parse the given responses for a valid reply--looping back
+    // around if a valid response isn't given.
     await thread.awaitMessages({ filter, max: 3, time: 10_000, errors: ['time'] })
-    .then (collected => 
-        console.log(collected)
-    )
-    .catch (collected => 
-        console.log(collected)
-    );
+
+    .then (collected =>                                                                                 // Max messages reached
+    {
+        var keyArr = Array.from(collected.keys());                                                      // Gets keys (message IDs) from message collection
+
+        var messages = [];                                                                              // User responses array
+        for (var i = 0; i < keyArr.length; i++) messages[i] = collected.get(keyArr[i]).content;         // Populates messages array with content from collected messages
+        
+        console.log("Done");
+    })
+    
+    .catch (collected =>                                                                                // Timeout/catch reached
+    {
+        console.log("Caught");
+    });
 
     await thread.delete();
+    msg.channel.reply("Game finished! (Placeholder)");
 }
 
 
