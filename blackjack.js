@@ -5,7 +5,6 @@
 
 
 /* Node modules */
-const { channel } = require('diagnostics_channel');
 const Discord = require('discord.js');                                                                  // Discord JS
 const Jimp = require('jimp');                                                                           // File manipulation                
 
@@ -25,6 +24,8 @@ const money = require('./money.js');																	// Money stuff
 // Additional check(s) may be needed for further bets
 async function playBlackjack(msg, args, client, bet)
 {
+    return; // Temp
+
     const thread = await msg.channel.threads.create
     ({
         name: 'BLACKJACK (' + msg.author.tag + ')',
@@ -60,6 +61,8 @@ async function playBlackjack(msg, args, client, bet)
             reminders = 0;
             var keyArr = Array.from(collected.keys());                                                  // Gets key(s) (message ID) from message collection 
             var message = collected.get(keyArr[0]).content;                                             // Gets message from collection based on message ID
+
+            // TODO: Everything
         })
         
         .catch (collected =>                                                                            // Timeout/catch reached
@@ -83,6 +86,14 @@ async function playBlackjack(msg, args, client, bet)
     
     return msg.reply("Game finished! (Placeholder)");
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*GAME FUNCTIONS*/
+
+
+//
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
