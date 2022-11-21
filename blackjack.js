@@ -1,7 +1,7 @@
 // DISCORD BOT 2
 // BLACKJACK FUNCTIONS
 // Created: 		11/12/22
-// Last modified:	11/18/22
+// Last modified:	11/21/22
 
 
 /* Node modules */
@@ -25,8 +25,6 @@ const money = require('./money.js');																	// Money stuff
 // Additional check(s) may be needed for further bets
 async function playBlackjack(msg, args, client, bet)
 {
-    return; // Temp
-
     const thread = await msg.channel.threads.create
     ({
         name: 'BLACKJACK (' + msg.author.tag + ')',
@@ -44,30 +42,46 @@ async function playBlackjack(msg, args, client, bet)
     var diamond = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'];
     var heart   = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'];
 
+    var cancelled = false;
+    var ended = false;
+    var reminders = 0;
+
     const filter = m => m.author.tag === msg.author.tag;                                                // Filters messages in thread to original author
 
     // Needs to be able to get messages after x amount of time/messages
     // then parse the given responses for a valid reply--looping back
     // around if a valid response isn't given.
-    await thread.awaitMessages({ filter, max: 3, time: 10_000, errors: ['time'] })
-
-    .then (collected =>                                                                                 // Max messages reached
+    do
     {
-        var keyArr = Array.from(collected.keys());                                                      // Gets keys (message IDs) from message collection
+        await thread.awaitMessages({ filter, max: 1, time: 60_000, errors: ['time'] })
 
-        var messages = [];                                                                              // User responses array
-        for (var i = 0; i < keyArr.length; i++) messages[i] = collected.get(keyArr[i]).content;         // Populates messages array with content from collected messages
+        .then (collected =>
+        {
+            reminders = 0;
+            var keyArr = Array.from(collected.keys());                                                  // Gets key(s) (message ID) from message collection 
+            var message = collected.get(keyArr[0]).content;                                             // Gets message from collection based on message ID
+        })
         
-        console.log("Done");
-    })
-    
-    .catch (collected =>                                                                                // Timeout/catch reached
-    {
-        console.log("Caught");
-    });
+        .catch (collected =>                                                                            // Timeout/catch reached
+        {
+            reminders += 1;
+            thread.send("Awaiting response... (" + reminders + "/3)");
+            if (reminders >= 3) cancelled = true, ended = true;                                         // After three reminders, abort the game
+        });
+    }
+    while(!ended);
 
     await thread.delete();
-    msg.channel.reply("Game finished! (Placeholder)");
+    
+    if (cancelled)
+    {
+        // TODO: Code to eat money here
+        // (Prevents cheating if losing)
+
+        return msg.reply("Timeout/error reached, ending game...");
+    }
+    
+    return msg.reply("Game finished! (Placeholder)");
 }
 
 
