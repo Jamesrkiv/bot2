@@ -1,7 +1,7 @@
 // DISCORD BOT 2
 // MONEY FUNCTIONS
 // Created: 		5/16/22
-// Last modified:	5/17/22
+// Last modified:	11/21/22
 
 /*
 	Requirement note: Access methods need to be dispached from both
@@ -367,7 +367,11 @@ function displayTop(msg, client)
 			embed.setColor('#d4d977');
 			for (var i = 1; i < 11; i++)
 			{
-				embed.addField('#' + i + ' - ' + res.rows[i-1].name, res.rows[i-1].money + ' points');
+				embed.addFields
+				({
+					name: '#' + i + ' - ' + res.rows[i-1].name,
+					value: res.rows[i-1].money + ' points'
+				});
 				if (res.rows[i] == undefined) break;
 			}
 			embed.setTitle('Top ' + i + ' Scores');
