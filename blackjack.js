@@ -1,7 +1,7 @@
 // DISCORD BOT 2
 // BLACKJACK FUNCTIONS
 // Created: 		11/12/22
-// Last modified:	11/21/22
+// Last modified:	11/25/22
 
 
 /* Node modules */
@@ -76,6 +76,15 @@ async function playBlackjack(msg, args, client, bet)
 
     await thread.delete();
     
+    // IMPORTANT NOTE !!!
+    //
+    // Need to re-check balance prior to any resolution, as the game could
+    // take place alongside additional betting and allow the user to spend
+    // money they don't have
+    //
+    // Alternatively, if this is allowed to happen and the user loses, the
+    // subsequent negative account balance may be punishment enough...
+
     if (cancelled)
     {
         // TODO: Code to eat money here
