@@ -1,7 +1,7 @@
 // DISCORD BOT 2
 // STOCK FUNCTIONS
 // Created: 		3/27/22
-// Last modified:	11/8/22
+// Last modified:	11/28/22
 
 
 /* Node modules */
@@ -148,7 +148,11 @@ async function getStock(msg, name, num)
         .setTitle(name)
         .setDescription('Current value: $' + history[num][history[num].length - 1] + '\n' +
                         'Last updated: ' + history[num][0]);
+    
+    // Some BS is broken with chartjs-node-canvas
+    // Feel free to fix this, anyone other than me
 
+    /*
     var configuration = 
     {                                                                           					    // Graph configuration
         type: 'line',
@@ -156,13 +160,22 @@ async function getStock(msg, name, num)
     };
 
     var attachmentName = Date.now() + '.png';                                                           // Attachment name
-    var canvas = new ChartJSNodeCanvas({width, height});                                                // Canvas
-    var image = await canvas.renderToBuffer(configuration);                                             // Generate image
+    var cnv = new ChartJSNodeCanvas({width: width, height: height});                                    // Canvas
+    var image = await cnv.renderToBuffer(configuration);                                                // Generate image
     var attach = new MessageAttachment(image, attachmentName);
 
     // embed.attachFiles([attach])                                                           
     embed.setImage('attachment://' + attachmentName);
     msg.channel.send({ embeds: [embed], files: [attach] });
+    */
+
+    embed.addFields(
+    {
+        name: 'Graph feature currently unavailable...',
+        value: 'This feature will be fixed. Eventually.'
+    });
+
+    msg.channel.send({embeds: [embed]})
 }
 
 
