@@ -1,7 +1,7 @@
 // DISCORD BOT 2
 //
 // Created: 		3/6/22
-// Last modified:	11/12/22
+// Last modified:	12/16/22
 
 
 /* Node modules */
@@ -17,6 +17,7 @@ const music =  require('./music.js');                                           
 const stock =  require('./stock.js');																	// JavaScript file for stocks stuff
 const money =  require('./money.js');																	// JavaScript file for money stuff
 const casino = require('./casino.js');                                                                  // JavaScript file for casino stuff
+const chat =   require('./chatbot.js');                                                                 // JavaScript file for chatbot stuff
 
 /* Discord bot client */
 const bot = new Discord.Client({ intents: [ Discord.Intents.FLAGS.GUILDS,
@@ -106,10 +107,25 @@ bot.on('messageCreate', msg=>                                                   
 {
     if(msg.author.bot) return;																			// Stops if message is sent by the bot
 
+    var args, command, user;
+
     let msgContent = msg.content.toLowerCase();															// Message as sent by user
-    if(!msg.content.startsWith(prefix)) return;															// Detects prefix
-    const args = msg.content.slice(prefix.length).split(' ');											// Formats command for reading
-    const command = args.shift().toLowerCase();															// ^
+    if(!msg.content.startsWith(prefix))                                                                 // Detects prefix
+    {
+        if(!msg.content.startsWith('<@')) return;                                                       // Check to see if bot is being mentioned
+
+        args = msg.content.split(' ');
+        command = "bottalk";
+        user = getUserFromMention(args[0]);
+        args.shift();
+
+        if (!user || user.id != '693634585178669137') return;                                           // Makes sure mention is bot
+    }
+    else
+    {									
+        args = msg.content.slice(prefix.length).split(' ');										        // Formats command for reading
+        command = args.shift().toLowerCase();														    // ^
+    }
 
     if (msg.guild)																						// Only allows commands w/in server
 	{ 
@@ -162,6 +178,12 @@ bot.on('messageCreate', msg=>                                                   
                 handlePurge(msg, args);                                                                 // Purge function
                 break;
                 
+            // BOT MENTION
+            case "bottalk":                                                                             // Communication with bot
+                if (!args[0]) return;
+                chat.chat(msg, args.join(' '));
+                break;
+
             // HELP COMMAND
             case "help":
                 showHelp(msg);                                                                          // Help menu
@@ -196,7 +218,8 @@ function showHelp(msg)                                                          
             {name: '!balance', value: 'Access your current account balance'},
             {name: '!welfare', value: 'Get +50 points every twelve hours'},
             {name: '!casino', value: 'View the available casino games'},
-            {name: '!purge', value: 'Deletes set number of messages\n(Admin only)'}
+            {name: '!purge', value: 'Deletes set number of messages\n(Admin only)'},
+            {name: '@Curiosity', value: 'Mention the bot at the start of your message to talk to it'}
         );
     msg.channel.send({ embeds: [helpEmbed] });
 }
@@ -237,6 +260,26 @@ async function purgeMsg(msg, amt)                                               
     { 
         msg.channel.bulkDelete(messages);                                                               // Deletes messages <14 days old
     });
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*MISC FUNCTIONS*/
+
+
+function getUserFromMention(mention)
+{
+	if (!mention) return;
+	if (mention.startsWith('<@') && mention.endsWith('>'))
+    {
+		mention = mention.slice(2, -1);
+		if (mention.startsWith('!'))
+        {
+			mention = mention.slice(1);
+		}
+		return bot.users.cache.get(mention);
+	}
 }
 
 
