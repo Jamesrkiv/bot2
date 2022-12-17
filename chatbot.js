@@ -1,7 +1,7 @@
 // DISCORD BOT 2
 // CHATBOT FUNCTIONS
 // Created: 		12/16/22
-// Last modified:	12/16/22
+// Last modified:	12/17/22
 
 
 /* Node modules */
@@ -26,8 +26,20 @@ function chat(msg, message)
         qs:
         {
             message: ('/' + message),
+            user: msg.author.id,                                                                        // Specifies the user being talked to, I think?
             name: 'Curiosity',
-            gender: 'rover'
+            gender: 'car',
+            birthplace: 'VS Code',
+            birthyear: '2022',
+            birthday: 'March 6th',
+            developer_name: 'Obama',
+            email: 'fuckoff@eatme.cum',
+            baseball: 'anything other than the Cubs',
+            species: 'rover',
+            president: 'Barack Obama',
+            country: '\'Murica',
+            state: 'despair',
+            religion: 'feet'
         },
         headers:
         {
@@ -42,7 +54,7 @@ function chat(msg, message)
         if (error) return msg.reply("Seems I'm not feeling up to responding right now. " +
                                     "Feel free to try again, or not. Whatever. (Error)");
 
-        // console.log(body);
+        // console.log('Readout: ' + body);
         msg.channel.send(JSON.parse(body).message);
     });
 }
