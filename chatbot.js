@@ -30,8 +30,8 @@ function chat(msg, message)
             name: 'Curiosity',
             gender: 'car',
             birthplace: 'VS Code',
-            birthyear: '2022',
-            birthday: 'March 6th',
+            birthyear: '2020',
+            birthday: 'May 6th',
             developer_name: 'Obama',
             email: 'fuckoff@eatme.cum',
             baseball: 'anything other than the Cubs',
@@ -39,7 +39,7 @@ function chat(msg, message)
             president: 'Barack Obama',
             country: '\'Murica',
             state: 'despair',
-            religion: 'feet'
+            religion: 'feet enjoyer'
         },
         headers:
         {
