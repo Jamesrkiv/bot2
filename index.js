@@ -1,7 +1,7 @@
 // DISCORD BOT 2
 //
 // Created: 		3/6/22
-// Last modified:	12/16/22
+// Last modified:	12/25/22
 
 
 /* Node modules */
@@ -95,6 +95,11 @@ process.on('unhandledRejection', error =>                                       
 process.on("multipleResolves", (type, promise, reason) =>                                               // Catch duplicate resolves (for connection in music.js)
 {
     if (reason.toLocaleString() === "Error: Cannot perform IP discovery - socket closed") return;
+});
+
+process.on('uncaughtException', function (err)
+{
+    console.log(err);
 });
 
 

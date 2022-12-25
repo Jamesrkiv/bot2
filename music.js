@@ -1,7 +1,7 @@
 // DISCORD BOT 2
 // MUSIC FUNCTIONS
 // Created: 		3/7/22
-// Last modified:	11/15/22
+// Last modified:	12/24/22
 
 
 const Discord = require('discord.js');
@@ -116,6 +116,7 @@ async function play(msg, serverQueue, args)
     try
     {
         var songInfo = await getInfo(args[1]);                                                      // Song info from ytdl
+        // console.log(songInfo);
         song =                                                                                      // Song object
         {
             title: songInfo.items[0].title,
@@ -124,7 +125,8 @@ async function play(msg, serverQueue, args)
     }
     catch(err)
     {
-        return msg.reply("Unable to find provided YouTube video!");
+        // console.log(err);
+        return msg.reply("Sorry, I seem to be having trouble checking that link.");
     }
     if (song == null) return msg.reply("Unable to find provided YouTube video!");
     
