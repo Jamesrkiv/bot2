@@ -25,7 +25,7 @@ const money = require('./money.js');																	// Money stuff
 // Additional check(s) may be needed for further bets
 async function playBlackjack(msg, args, client, bet)
 {
-    return; // Temp
+    return; //temp
 
     const thread = await msg.channel.threads.create
     ({
@@ -45,6 +45,8 @@ async function playBlackjack(msg, args, client, bet)
 
     var pHand = [];                                                                                     // Player hand
     var bHand = [];                                                                                     // Bot hand
+    let pimg = undefined;
+    let bimg = undefined;
 
     var cancelled = false;
     var ended = false;
@@ -65,6 +67,14 @@ async function playBlackjack(msg, args, client, bet)
     var fPlayerHand = new Discord.MessageEmbed()
         .setColor(0x7C9759)
         .setTitle('Your Hand');
+
+    await genCard(bHand[0], bimg);
+    await genCard(bHand[1], bimg);
+    thread.send({embeds: [fBotHand], files: [bimg]});
+
+    await genCard(pHand[0], pimg);
+    await genCard(pHand[1], pimg);
+    thread.send({embeds: [fPlayerHand], files: [pimg]});
 
     const filter = m => m.author.tag === msg.author.tag;                                                // Filters messages in thread to original author
     // Needs to be able to get messages after x amount of time/messages
@@ -131,9 +141,23 @@ async function playBlackjack(msg, args, client, bet)
 
 
 // TODO: use Node Jimp to add value to card(s) and resize
-function genCard(card)
+async function genCard(card, hand)
 {
-    return;
+    const template = await Jimp.read('./bot2/casino/deck/' + card[0] + '.png');
+    const font = await Jimp.loadFont(Jimp.FONT_SANS_128_BLACK);
+    template.print(font, 150, 300, "" + card[1]);
+
+    template.getBuffer(Jimp.MIME_JPEG, (err, buffer) =>
+    {
+        if (hand == undefined) return hand = buffer;
+        else
+        {
+            JoinImages.joinImages([hand, buffer]).then((img => 
+            {
+                return hand = img;
+            }));
+        }
+    });
 }
 
 // TODO: use Node join-images to get imaged from genCard and output a single image
